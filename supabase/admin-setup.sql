@@ -4,16 +4,15 @@
 alter table public.profiles
   add column if not exists is_superadmin boolean not null default false;
 
--- 2) Promote yourself (edit the email if needed)
+-- 2) Promote yourself (edit emails if needed)
 update public.profiles
 set is_superadmin = true
-where id = (
+where id in (
   select id from auth.users
   where email in (
     'yk3057@columbia.edu',
     'ykimbestday@gmail.com'
   )
-  limit 1
 );
 
 -- If that matched 0 rows, run this after you know your auth user id:
